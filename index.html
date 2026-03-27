@@ -369,6 +369,66 @@
     .card-header { padding: 16px 18px 12px; }
     .card-body { padding: 0 18px 20px; }
   }
+
+  /* ── TERM TOOLTIPS ── */
+  .term-abbr {
+    border-bottom: 1.5px dashed rgba(201,169,110,0.6);
+    cursor: help;
+    color: var(--accent2);
+    font-weight: 500;
+    transition: color .15s, border-color .15s;
+    border-radius: 2px;
+  }
+  .term-abbr:hover, .term-abbr.tt-active {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: rgba(201,169,110,0.08);
+  }
+  #term-tooltip {
+    position: fixed;
+    z-index: 9999;
+    max-width: 300px;
+    width: max-content;
+    background: rgba(14,12,22,0.97);
+    border: 1px solid rgba(201,169,110,0.4);
+    border-radius: 14px;
+    padding: 14px 18px;
+    backdrop-filter: blur(28px) saturate(1.5);
+    -webkit-backdrop-filter: blur(28px) saturate(1.5);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .18s, transform .18s;
+    font-family: 'Montserrat', sans-serif;
+  }
+  #term-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  #term-tooltip .tt-term {
+    font-size: 11px; font-weight: 700; color: var(--accent);
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  #term-tooltip .tt-term::before {
+    content: '';
+    display: inline-block; width: 4px; height: 4px;
+    background: var(--accent); border-radius: 50%;
+  }
+  #term-tooltip .tt-desc {
+    font-size: 12.5px; color: var(--text); line-height: 1.65; margin-bottom: 10px;
+    font-weight: 300;
+  }
+  #term-tooltip .tt-chapter {
+    font-size: 10.5px; color: var(--muted);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 8px;
+    display: flex; gap: 6px; align-items: flex-start;
+  }
+  #term-tooltip .tt-chapter-icon {
+    color: var(--accent); opacity: 0.7; flex-shrink: 0; margin-top: 1px;
+  }
 </style>
 </head>
 <body>
@@ -740,6 +800,12 @@
   <p style="margin-top:6px;font-size:11px">30 phút · 6 thành viên · 18–20 slides</p>
 </footer>
 
+<div id="term-tooltip" role="tooltip">
+  <div class="tt-term" id="tt-name"></div>
+  <div class="tt-desc" id="tt-desc"></div>
+  <div class="tt-chapter"><span class="tt-chapter-icon">◎</span><span id="tt-chapter"></span></div>
+</div>
+
 <script>
   function toggle(header) {
     const card = header.closest('.member-card');
@@ -767,6 +833,297 @@
       }
     });
   });
+
+  /* ── TERM TOOLTIP ENGINE ── */
+  const TERM_DATA = {
+    'FCPA': {
+      desc: 'Foreign Corrupt Practices Act — Đạo luật chống tham nhũng nước ngoài của Mỹ (1977). Cấm công ty Mỹ hối lộ quan chức nước ngoài để giành hợp đồng. Áp dụng kể cả khi hành vi xảy ra ngoài nước Mỹ.',
+      chapter: 'Thành viên 3 · Khánh Linh — Bribery (Slide 2)'
+    },
+    'ILO': {
+      desc: 'International Labour Organization — Tổ chức Lao động Quốc tế (thuộc LHQ). Đặt ra tiêu chuẩn lao động cốt lõi toàn cầu: cấm lao động cưỡng bức, lao động trẻ em, phân biệt đối xử, bảo đảm quyền lập công đoàn.',
+      chapter: 'Thành viên 1 · Khánh Ngân — Human Rights (Slide 2)'
+    },
+    'WTO': {
+      desc: 'World Trade Organization — Tổ chức Thương mại Thế giới. Điều phối thương mại toàn cầu qua 3 hiệp định nền tảng: GATT (hàng hóa), GATS (dịch vụ), TRIPS (sở hữu trí tuệ).',
+      chapter: 'Xuyên suốt nhiều phần — đặc biệt Thành viên 2 & 6'
+    },
+    'GATT': {
+      desc: 'General Agreement on Tariffs and Trade — Hiệp định Chung về Thuế quan và Thương mại. Một trong 3 trụ cột WTO, điều chỉnh thương mại hàng hóa. Chứa nguyên tắc National Treatment và Most Favored Nation.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination; Thành viên 5 · Anh Kiệt — Pollution'
+    },
+    'GATS': {
+      desc: 'General Agreement on Trade in Services — Hiệp định Chung về Thương mại Dịch vụ. Một trong 3 trụ cột WTO, điều chỉnh thương mại dịch vụ như ngân hàng, viễn thông, du lịch.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 2)'
+    },
+    'TRIPS': {
+      desc: 'Trade-Related Aspects of Intellectual Property Rights — Hiệp định về quyền sở hữu trí tuệ liên quan đến thương mại. Một trong 3 trụ cột WTO, đặt tiêu chuẩn tối thiểu toàn cầu về bảo hộ patent, copyright, trademark.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 2)'
+    },
+    'NAFTA': {
+      desc: 'North American Free Trade Agreement — Hiệp định Thương mại Tự do Bắc Mỹ (Mỹ–Canada–Mexico, 1994). Bảo vệ quyền môi trường, IP và dịch vụ viễn thông giữa 3 nước. Đã được thay bởi USMCA năm 2020.',
+      chapter: 'Thành viên 5 · Anh Kiệt — Pollution; Thành viên 6 · Leader — Telecom & IP'
+    },
+    'MFN': {
+      desc: 'Most Favored Nation — Tối huệ quốc. Nguyên tắc WTO: nếu một nước ưu đãi thuế quan cho nước A thì phải áp dụng ưu đãi tương tự cho tất cả thành viên WTO còn lại.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 2)'
+    },
+    'ESG': {
+      desc: 'Environmental, Social, Governance — Môi trường, Xã hội, Quản trị. Bộ tiêu chí đo lường trách nhiệm bền vững của doanh nghiệp. Sau Hiệp định Paris 2015, nhiều nước yêu cầu công ty báo cáo chỉ số ESG.',
+      chapter: 'Thành viên 5 · Anh Kiệt — Pollution (Slide 2)'
+    },
+    'FDA': {
+      desc: 'Food and Drug Administration — Cục Quản lý Thực phẩm và Dược phẩm Mỹ. Kiểm soát tiêu chuẩn an toàn thực phẩm và dược phẩm. Ví dụ điển hình của Extraterritorial Application: nhà máy ở nước ngoài xuất hàng vào Mỹ phải tuân chuẩn FDA.',
+      chapter: 'Thành viên 4 · Nhật Nam — Harmful Products (Slide 2)'
+    },
+    'CEC': {
+      desc: 'Commission for Environmental Cooperation — Ủy ban Hợp tác Môi trường Bắc Mỹ. Thành lập theo NAFTA, giám sát việc thực thi cam kết môi trường giữa Mỹ, Canada và Mexico.',
+      chapter: 'Thành viên 5 · Anh Kiệt — Pollution (Slide 2)'
+    },
+    'OECD': {
+      desc: 'Organisation for Economic Co-operation and Development — Tổ chức Hợp tác và Phát triển Kinh tế. Gồm ~38 nước phát triển. Mỹ vận động OECD cùng ký Công ước chống hối lộ quan chức nước ngoài.',
+      chapter: 'Thành viên 3 · Khánh Linh — Bribery (Slide 2)'
+    },
+    'IP': {
+      desc: 'Intellectual Property — Sở hữu trí tuệ. Quyền sở hữu đối với sản phẩm trí tuệ: bằng sáng chế (patent), quyền tác giả (copyright), nhãn hiệu (trademark), bí mật thương mại.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 1)'
+    },
+    'Extraterritorial Application': {
+      desc: 'Áp dụng ngoài lãnh thổ — Nguyên tắc cho phép luật một quốc gia kiểm soát hành vi của công ty nước đó ở nước ngoài. Ví dụ: FDA kiểm soát nhà máy Ấn Độ xuất hàng vào Mỹ; FCPA kiểm soát công ty Mỹ hối lộ ở nước khác.',
+      chapter: 'Thành viên 1 · Khánh Ngân — Human Rights; Thành viên 4 · Nhật Nam — Harmful Products'
+    },
+    'UN Guiding Principles': {
+      desc: 'Nguyên tắc hướng dẫn LHQ về Kinh doanh và Nhân quyền (2011). Quy định doanh nghiệp có 3 nghĩa vụ cốt lõi: Bảo vệ (Protect) · Tôn trọng (Respect) · Khắc phục (Remedy).',
+      chapter: 'Thành viên 1 · Khánh Ngân — Human Rights (Slide 2)'
+    },
+    'National Treatment': {
+      desc: 'Đối xử quốc gia — Nguyên tắc WTO/GATT: cấm một nước đối xử với hàng nhập khẩu bất lợi hơn hàng nội địa cùng loại sau khi hàng đã thông quan vào thị trường trong nước.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 2)'
+    },
+    'Most Favored Nation': {
+      desc: 'Tối huệ quốc — Nguyên tắc WTO: ưu đãi thương mại dành cho một thành viên phải áp dụng bình đẳng cho tất cả thành viên WTO còn lại (không phân biệt đối xử giữa các đối tác).',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 2)'
+    },
+    'Robinson-Patman Act': {
+      desc: 'Luật chống phân biệt giá của Mỹ (1936). Cấm bán cùng sản phẩm cho các nhà bán lẻ khác nhau với giá khác nhau nếu điều đó gây hại cho cạnh tranh thị trường.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 2)'
+    },
+    'UK Bribery Act': {
+      desc: 'Luật chống hối lộ của Anh (2010). Nghiêm hơn FCPA của Mỹ: cấm cả facilitation payments, áp dụng cho mọi công ty hoạt động tại Anh bất kể trụ sở ở đâu trên thế giới.',
+      chapter: 'Thành viên 3 · Khánh Linh — Bribery (Slide 2)'
+    },
+    'Magnuson-Moss Warranty Act': {
+      desc: 'Luật bảo hành người tiêu dùng Mỹ. Bảo vệ người mua hàng khỏi bị lừa dối về điều khoản bảo hành sản phẩm, cho phép kiện nhà sản xuất hoặc nhà bán lẻ vi phạm cam kết bảo hành.',
+      chapter: 'Thành viên 4 · Nhật Nam — Harmful Products (Slide 2)'
+    },
+    'compulsory licensing': {
+      desc: 'Cấp phép bắt buộc — Cơ chế cho phép chính phủ cấp phép sản xuất sản phẩm đang được bảo hộ patent mà không cần sự đồng ý của chủ bằng sáng chế. Thường dùng trong khẩn cấp y tế để sản xuất thuốc generic giá rẻ. WTO cho phép theo Tuyên bố Doha 2001.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 3)'
+    },
+    'facilitation payments': {
+      desc: 'Khoản thanh toán bôi trơn nhỏ — Tiền nhỏ trả cho quan chức để thúc đẩy thủ tục hành chính thông thường (cấp giấy phép, thông quan...). Dù số tiền nhỏ, vẫn bị coi là bất hợp pháp theo UK Bribery Act và nhiều luật quốc tế.',
+      chapter: 'Thành viên 3 · Khánh Linh — Bribery (Slide 1)'
+    },
+    'pollution haven': {
+      desc: 'Thiên đường ô nhiễm — Hiện tượng công ty chuyển hoạt động sản xuất gây ô nhiễm sang quốc gia có tiêu chuẩn môi trường lỏng lẻo hơn để giảm chi phí xử lý chất thải và tránh quy định nghiêm ngặt.',
+      chapter: 'Thành viên 5 · Anh Kiệt — Pollution (Slide 1)'
+    },
+    'Hiệp định Paris': {
+      desc: 'Paris Agreement (2015) — Hiệp định khí hậu toàn cầu ký tại COP21. Các quốc gia cam kết giảm phát thải khí nhà kính nhằm giữ nhiệt độ Trái Đất tăng dưới 2°C. Tạo xu hướng yêu cầu báo cáo ESG từ doanh nghiệp.',
+      chapter: 'Thành viên 5 · Anh Kiệt — Pollution (Slide 2)'
+    },
+    'Bilateral agreements': {
+      desc: 'Hiệp định song phương — Thỏa thuận thương mại ký kết giữa hai quốc gia. Mỹ thường yêu cầu điều khoản bảo hộ sở hữu trí tuệ (IP) chặt chẽ khi ký hiệp định song phương với các nước đang phát triển.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 2)'
+    },
+    'patent': {
+      desc: 'Bằng sáng chế — Quyền độc quyền khai thác một phát minh trong thời hạn nhất định (thường 20 năm). Sau khi hết hạn, ai cũng có thể sản xuất theo công thức đó (thuốc generic).',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 1)'
+    },
+    'copyright': {
+      desc: 'Quyền tác giả — Quyền kiểm soát việc sao chép, phân phối, và sử dụng tác phẩm sáng tạo (sách, nhạc, phần mềm, phim...). Tự động phát sinh khi tác phẩm được tạo ra, không cần đăng ký.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 1)'
+    },
+    'trademark': {
+      desc: 'Nhãn hiệu thương mại — Ký hiệu, tên, logo phân biệt sản phẩm/dịch vụ của một công ty với đối thủ. Ví dụ: logo Nike, tên Apple. Bảo vệ bản sắc thương hiệu trên thị trường.',
+      chapter: 'Thành viên 6 · Leader — Telecom & IP (Slide 1)'
+    },
+    'generic': {
+      desc: 'Thuốc generic — Thuốc bào chế theo công thức gốc đã hết hạn bảo hộ patent, sản xuất bởi công ty thứ ba với giá rẻ hơn nhiều. VD: thuốc ARV điều trị HIV generic giá ~100 USD/năm so với bản gốc ~10.000 USD.',
+      chapter: 'Thành viên 2 · Thế Kiệt — Price Discrimination (Slide 3)'
+    }
+  };
+
+  // Sort terms: longest first to avoid partial-match overwriting
+  const TERM_KEYS = Object.keys(TERM_DATA).sort((a, b) => b.length - a.length);
+
+  function escapeRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function wrapTermsInNode(textNode) {
+    let html = textNode.textContent;
+    let modified = false;
+    const usedRanges = [];
+
+    // Build one combined regex pass to find all matches
+    const matches = [];
+    for (const key of TERM_KEYS) {
+      const flags = /[a-z]/.test(key) ? 'gi' : 'g'; // case-insensitive for lowercase terms
+      const re = new RegExp('(?<![\\w-])' + escapeRegex(key) + '(?![\\w-])', flags);
+      let m;
+      while ((m = re.exec(html)) !== null) {
+        const start = m.index, end = m.index + m[0].length;
+        // Check no overlap with already found matches
+        const overlaps = matches.some(([s, e]) => start < e && end > s);
+        if (!overlaps) {
+          matches.push([start, end, m[0], key]);
+        }
+      }
+    }
+
+    if (matches.length === 0) return false;
+
+    // Sort by position
+    matches.sort((a, b) => a[0] - b[0]);
+
+    // Build wrapped HTML
+    const parent = textNode.parentNode;
+    if (!parent || parent.classList && parent.classList.contains('term-abbr')) return false;
+
+    const frag = document.createDocumentFragment();
+    let cursor = 0;
+    for (const [start, end, matchedText, key] of matches) {
+      if (start > cursor) {
+        frag.appendChild(document.createTextNode(html.slice(cursor, start)));
+      }
+      const span = document.createElement('span');
+      span.className = 'term-abbr';
+      span.dataset.termKey = key;
+      span.textContent = matchedText;
+      frag.appendChild(span);
+      cursor = end;
+    }
+    if (cursor < html.length) {
+      frag.appendChild(document.createTextNode(html.slice(cursor)));
+    }
+
+    parent.replaceChild(frag, textNode);
+    return true;
+  }
+
+  function walkAndWrap(root) {
+    const walker = document.createTreeWalker(
+      root,
+      NodeFilter.SHOW_TEXT,
+      {
+        acceptNode(node) {
+          const p = node.parentNode;
+          if (!p) return NodeFilter.FILTER_REJECT;
+          const tag = p.tagName && p.tagName.toLowerCase();
+          if (['script', 'style', 'nav', 'button'].includes(tag)) return NodeFilter.FILTER_REJECT;
+          if (p.classList && p.classList.contains('term-abbr')) return NodeFilter.FILTER_REJECT;
+          if (node.textContent.trim() === '') return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;
+        }
+      }
+    );
+    const nodes = [];
+    let n;
+    while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach(wrapTermsInNode);
+  }
+
+  // Tooltip logic
+  const tooltip = document.getElementById('term-tooltip');
+  const ttName = document.getElementById('tt-name');
+  const ttDesc = document.getElementById('tt-desc');
+  const ttChapter = document.getElementById('tt-chapter');
+  let activeSpan = null;
+  let hideTimer = null;
+
+  function showTooltip(span, x, y) {
+    const key = span.dataset.termKey;
+    const data = TERM_DATA[key];
+    if (!data) return;
+    ttName.textContent = key;
+    ttDesc.textContent = data.desc;
+    ttChapter.textContent = data.chapter;
+    tooltip.classList.add('visible');
+    positionTooltip(x, y);
+  }
+
+  function positionTooltip(x, y) {
+    const tw = tooltip.offsetWidth || 300;
+    const th = tooltip.offsetHeight || 120;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    let left = x + 14, top = y - 10;
+    if (left + tw > vw - 16) left = x - tw - 14;
+    if (top + th > vh - 16) top = vh - th - 16;
+    if (top < 8) top = 8;
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+    if (activeSpan) { activeSpan.classList.remove('tt-active'); activeSpan = null; }
+  }
+
+  document.addEventListener('mouseover', e => {
+    const span = e.target.closest('.term-abbr');
+    if (span) {
+      clearTimeout(hideTimer);
+      if (activeSpan && activeSpan !== span) activeSpan.classList.remove('tt-active');
+      activeSpan = span;
+      span.classList.add('tt-active');
+      showTooltip(span, e.clientX, e.clientY);
+    }
+  });
+  document.addEventListener('mousemove', e => {
+    if (tooltip.classList.contains('visible') && e.target.closest('.term-abbr')) {
+      positionTooltip(e.clientX, e.clientY);
+    }
+  });
+  document.addEventListener('mouseout', e => {
+    if (e.target.closest('.term-abbr')) {
+      hideTimer = setTimeout(hideTooltip, 200);
+    }
+  });
+  // Touch support
+  document.addEventListener('click', e => {
+    const span = e.target.closest('.term-abbr');
+    if (span) {
+      e.stopPropagation();
+      if (activeSpan === span && tooltip.classList.contains('visible')) {
+        hideTooltip(); return;
+      }
+      if (activeSpan) activeSpan.classList.remove('tt-active');
+      activeSpan = span;
+      span.classList.add('tt-active');
+      const r = span.getBoundingClientRect();
+      showTooltip(span, r.left + r.width / 2, r.bottom + 4);
+    } else {
+      hideTooltip();
+    }
+  });
+
+  // Run after DOM is fully loaded and cards may be opened
+  document.addEventListener('DOMContentLoaded', () => {
+    walkAndWrap(document.querySelector('.page-wrap'));
+  });
+
+  // Also wrap when a card is opened (content was hidden)
+  const origToggle = window.toggle;
+  window.toggle = function(header) {
+    const card = header.closest('.member-card');
+    const wasOpen = card.classList.contains('open');
+    origToggle(header);
+    if (!wasOpen) {
+      const body = card.querySelector('.card-body');
+      if (body) walkAndWrap(body);
+    }
+  };
 </script>
 </div><!-- /page-wrap -->
 </body>
