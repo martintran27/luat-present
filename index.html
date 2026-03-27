@@ -370,6 +370,95 @@
     .card-body { padding: 0 18px 20px; }
   }
 
+  /* ── AI GUIDE ── */
+  .ai-guide { padding: 60px 24px 20px; max-width: 880px; margin: 0 auto; }
+
+  .ai-intro {
+    background: rgba(201,169,110,0.06);
+    border: 1px solid rgba(201,169,110,0.2);
+    border-radius: 16px; padding: 24px 28px; margin-bottom: 24px;
+  }
+  .ai-intro-title { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .ai-intro-desc { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .ai-tools { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .ai-tools-label { font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); margin-right: 4px; }
+  .ai-tool-link {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.05em;
+    padding: 4px 12px; border-radius: 20px; border: 1px solid;
+    text-decoration: none; transition: all .2s; cursor: pointer;
+  }
+  .ai-tool-link.grok { color: #a78bfa; border-color: rgba(167,139,250,0.3); background: rgba(167,139,250,0.07); }
+  .ai-tool-link.perp { color: #34d399; border-color: rgba(52,211,153,0.3); background: rgba(52,211,153,0.07); }
+  .ai-tool-link.claude { color: #fb923c; border-color: rgba(251,146,60,0.3); background: rgba(251,146,60,0.07); }
+  .ai-tool-link.chatgpt { color: #60a5fa; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.07); }
+  .ai-tool-link:hover { filter: brightness(1.3); }
+
+  .pt-filters { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+  .pt-filter {
+    font-size: 11px; font-weight: 500; padding: 5px 14px;
+    border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04); color: var(--muted);
+    cursor: pointer; transition: all .2s; letter-spacing: 0.04em;
+  }
+  .pt-filter.active { color: var(--accent); border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.08); }
+  .pt-filter:hover:not(.active) { color: var(--text); border-color: rgba(255,255,255,0.18); }
+
+  .ai-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 14px; margin-bottom: 12px; overflow: hidden;
+    backdrop-filter: blur(12px); transition: border-color .2s;
+  }
+  .ai-card:hover { border-color: rgba(255,255,255,0.15); }
+  .ai-card-hd {
+    padding: 16px 20px; display: flex; align-items: center; gap: 12px;
+    cursor: pointer; user-select: none;
+  }
+  .ai-card-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ai-card-info { flex: 1; }
+  .ai-card-name { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .ai-card-topic { font-size: 11px; color: var(--muted); }
+  .ai-card-tog { font-size: 11px; color: var(--muted2); transition: transform .2s; }
+  .ai-card.open .ai-card-tog { transform: rotate(180deg); }
+  .ai-card-bd {
+    display: none; padding: 0 16px 16px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+  .ai-card.open .ai-card-bd { display: block; }
+
+  .prompt-block {
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; margin-top: 10px; overflow: hidden;
+  }
+  .prompt-block.pt-hidden { display: none; }
+  .prompt-hd {
+    padding: 9px 14px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.02);
+  }
+  .prompt-type-lbl {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); flex: 1; min-width: 80px;
+  }
+  .ai-bdg {
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 2px 7px; border-radius: 3px; text-transform: uppercase;
+  }
+  .ai-bdg.grok { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .ai-bdg.perp { background: rgba(52,211,153,0.15); color: #34d399; }
+  .ai-bdg.claude { background: rgba(251,146,60,0.15); color: #fb923c; }
+  .ai-bdg.chatgpt { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .copy-btn {
+    font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 6px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--muted); cursor: pointer; transition: all .2s; flex-shrink: 0;
+  }
+  .copy-btn:hover { color: var(--text); border-color: rgba(201,169,110,0.4); background: rgba(201,169,110,0.08); }
+  .copy-btn.copied { color: #7ecb96; border-color: rgba(126,203,150,0.4); background: rgba(126,203,150,0.08); }
+  .prompt-text {
+    font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 300;
+    color: var(--muted); line-height: 1.8; padding: 14px 16px;
+    white-space: pre-wrap; word-break: break-word; margin: 0;
+  }
+
   /* ── TERM TOOLTIPS ── */
   .term-abbr {
     border-bottom: 1.5px dashed rgba(201,169,110,0.6);
@@ -445,6 +534,7 @@
       <a class="nav-pill" href="#nhat-nam">Nhật Nam</a>
       <a class="nav-pill" href="#anh-kiet">Anh Kiệt</a>
       <a class="nav-pill" href="#leader">Phần kết</a>
+      <a class="nav-pill" href="#ai-guide-root" style="color:var(--accent);border-color:rgba(201,169,110,0.3)">AI ✦</a>
     </div>
     <button class="theme-btn" onclick="toggleTheme()" id="themeBtn">☀</button>
   </div>
@@ -795,6 +885,35 @@
 
 </div>
 
+<!-- AI GUIDE -->
+<div id="ai-guide-root" class="ai-guide">
+  <div class="section-rule" style="background:linear-gradient(90deg,var(--accent),transparent)"></div>
+  <div class="section-label">Hướng dẫn dùng AI</div>
+
+  <div class="ai-intro">
+    <div class="ai-intro-title">Dùng AI để chuẩn bị bài tốt hơn</div>
+    <div class="ai-intro-desc">Mỗi thành viên có 3 prompt sẵn sàng dùng ngay: <strong style="color:var(--text)">tìm case</strong> thực tế mới, <strong style="color:var(--text)">hiểu sâu outline</strong> của mình, và <strong style="color:var(--text)">viết script</strong> thuyết trình tự nhiên. Sao chép → dán vào AI → chỉnh theo ý.</div>
+    <div class="ai-tools">
+      <span class="ai-tools-label">Dùng cho tìm case →</span>
+      <a class="ai-tool-link grok" href="https://grok.com" target="_blank" rel="noopener">Grok ↗</a>
+      <a class="ai-tool-link perp" href="https://www.perplexity.ai" target="_blank" rel="noopener">Perplexity ↗</a>
+      <span style="color:var(--muted2);font-size:11px;margin:0 4px">·</span>
+      <span class="ai-tools-label">Viết nội dung →</span>
+      <a class="ai-tool-link claude" href="https://claude.ai" target="_blank" rel="noopener">Claude ↗</a>
+      <a class="ai-tool-link chatgpt" href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT ↗</a>
+    </div>
+  </div>
+
+  <div class="pt-filters">
+    <button class="pt-filter active" onclick="filterAI('all',this)">Tất cả</button>
+    <button class="pt-filter" onclick="filterAI('case',this)">🔍 Tìm case</button>
+    <button class="pt-filter" onclick="filterAI('outline',this)">📋 Hiểu outline</button>
+    <button class="pt-filter" onclick="filterAI('script',this)">🎙 Viết script</button>
+  </div>
+
+  <div id="ai-cards"></div>
+</div>
+
 <footer>
   <p>Nhóm 4 · <span>Global Economy 2 — Topic 3</span> · Môn Luật & Đạo đức Kinh doanh · Đại học Văn Lang</p>
   <p style="margin-top:6px;font-size:11px">30 phút · 6 thành viên · 18–20 slides</p>
@@ -1124,6 +1243,270 @@
       if (body) walkAndWrap(body);
     }
   };
+</script>
+
+<script>
+/* ── AI GUIDE ENGINE ── */
+const AI_MEMBERS = [
+  {
+    id: 'm1', name: 'Khánh Ngân', topic: 'Human Rights', dot: '#e8958a',
+    prompts: {
+      case: `Tìm 3 case study thực tế về công ty đa quốc gia vi phạm quyền lao động (khác Nike) tại nước đang phát triển sau năm 2000. Mỗi case cần có:
+• Tên công ty, quốc gia đặt nhà máy, năm xảy ra
+• Hành vi vi phạm cụ thể (giờ làm, lương, tuổi lao động)
+• Hậu quả thực tế: tẩy chay, kiện tụng, phạt tiền, thay đổi chính sách
+• 1 câu bài học đạo đức ngắn gọn
+Cho thêm số liệu cụ thể nếu có.`,
+      outline: `Tôi sắp thuyết trình 5 phút về Human Rights trong kinh doanh quốc tế (môn Luật & Đạo đức KD). Outline 3 slides:
+
+Slide 1: Quyền con người trong KD gồm (lương công bằng, không ép làm quá sức, không phân biệt, không lao động trẻ em) + tại sao MNC vi phạm (đặt nhà máy ở nước luật lỏng → cắt chi phí) + khái niệm Extraterritorial Application
+
+Slide 2: UN Guiding Principles 2011 (3 nghĩa vụ: Protect, Respect, Remedy) + tiêu chuẩn lao động ILO cốt lõi + luật Mỹ áp dụng ngoài biên giới
+
+Slide 3: Case Nike — xưởng may Indonesia & Việt Nam thập niên 1990
+
+Giúp tôi:
+1. Giải thích đơn giản Extraterritorial Application là gì (cho người chưa học luật)
+2. Gợi ý câu chuyển tiếp tự nhiên giữa 3 slides
+3. Chỉ 2 điểm cần nhấn mạnh nhất khi thuyết trình`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Human Rights trong kinh doanh quốc tế. Nội dung:
+
+Phần 1 (~1.5 phút): Quyền con người trong KD là gì + tại sao MNC vi phạm (lý do kinh tế: đặt nhà máy ở nước luật lỏng hơn) + giải thích ngắn Extraterritorial Application
+
+Phần 2 (~1.5 phút): UN Guiding Principles 2011 với 3 nghĩa vụ Protect-Respect-Remedy + tiêu chuẩn ILO
+
+Phần 3 (~2 phút): Case Nike thập niên 1990 tại Indonesia & Việt Nam — 12 tiếng/ngày, lương dưới mức sống, trẻ em đi làm → báo chí phanh phui → tẩy chay toàn cầu → cổ phiếu lao dốc → Nike buộc thay đổi → bài học
+
+Yêu cầu: nói tự nhiên như nói chuyện (không đọc bài), có câu hỏi tương tác với lớp, kết thúc đáng nhớ, không mở bằng "Xin chào" hay "Hôm nay tôi sẽ trình bày về"`
+    }
+  },
+  {
+    id: 'm2', name: 'Thế Kiệt', topic: 'Price Discrimination', dot: '#7ecb96',
+    prompts: {
+      case: `Tìm 3 case study thực tế về phân biệt giá (price discrimination) trong kinh doanh quốc tế sau năm 2000. Không dùng lại ví dụ thuốc HIV. Mỗi case cần:
+• Tên công ty/ngành, năm, thị trường bị ảnh hưởng
+• Hình thức phân biệt giá cụ thể (cá nhân hóa, theo nhóm, theo vùng địa lý)
+• Phản ứng của người tiêu dùng hoặc cơ quan quản lý
+• 1 câu đánh giá đạo đức kinh doanh
+Ưu tiên case liên quan đến thị trường châu Á hoặc các nền kinh tế đang phát triển.`,
+      outline: `Tôi sắp thuyết trình 5 phút về Price Discrimination trong kinh doanh quốc tế. Outline 3 slides:
+
+Slide 1: Định nghĩa phân biệt giá (bán cùng sản phẩm giá khác nhau cho từng nhóm) + 3 loại (cá nhân hóa, theo số lượng, theo nhóm) + lý do công ty làm vậy (tối đa hóa lợi nhuận theo sức mua từng thị trường)
+
+Slide 2: Pháp luật kiểm soát: National Treatment (WTO/GATT), Most Favored Nation (MFN), Robinson-Patman Act Mỹ
+
+Slide 3: Case hãng dược (Pfizer, Novartis) — thuốc ung thư/HIV giá cao ở Mỹ & châu Âu, thấp 100 lần ở châu Phi + compulsory licensing + Tuyên bố Doha 2001
+
+Giúp tôi:
+1. Giải thích dễ hiểu National Treatment và MFN khác nhau như thế nào
+2. Cách liên kết 3 slides tự nhiên
+3. Điểm mâu thuẫn đạo đức vs kinh tế mạnh nhất cần nhấn mạnh`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Price Discrimination trong kinh doanh quốc tế. Nội dung:
+
+Phần 1 (~1.5 phút): Phân biệt giá là gì + ví dụ thuốc HIV 10.000 USD ở Mỹ vs 100 USD ở châu Phi + 3 loại phân biệt giá + tại sao công ty làm vậy (tối đa hóa lợi nhuận)
+
+Phần 2 (~1.5 phút): National Treatment và MFN trong WTO/GATT + Robinson-Patman Act Mỹ cấm phân biệt giá gây hại cạnh tranh
+
+Phần 3 (~2 phút): Case Pfizer/Novartis — thuốc ung thư/HIV + phản ứng Nam Phi, Ấn Độ với compulsory licensing + WTO Tuyên bố Doha 2001 + bài học: hợp lý về kinh tế nhưng vẫn sai về đạo đức nếu nó quyết định ai được sống
+
+Yêu cầu: nói tự nhiên, có câu hỏi tương tác với lớp, kết thúc đáng nhớ, không mở bằng "Xin chào"`
+    }
+  },
+  {
+    id: 'm3', name: 'Khánh Linh', topic: 'Bribery — Tham nhũng & Hối lộ', dot: '#f0bc78',
+    prompts: {
+      case: `Tìm 3 case study thực tế về doanh nghiệp bị phạt vì hối lộ quan chức nước ngoài (theo FCPA hoặc luật chống tham nhũng quốc tế) sau năm 2010. Khác case Siemens. Mỗi case:
+• Tên công ty, quốc gia nơi hối lộ xảy ra, năm bị phát hiện
+• Hành vi hối lộ cụ thể (ai nhận, bao nhiêu tiền, để đổi lấy gì)
+• Mức phạt và hậu quả pháp lý/kinh doanh
+• 1 câu bài học ngắn
+Ưu tiên công ty lớn có tên tuổi (Fortune 500 hoặc tương đương).`,
+      outline: `Tôi sắp thuyết trình 5 phút về Bribery (Tham nhũng & Hối lộ) trong kinh doanh quốc tế. Outline 3 slides:
+
+Slide 1: Hối lộ là gì (trả tiền cho quan chức để được cấp phép, trúng thầu, né kiểm tra) + tại sao vẫn xảy ra (chi phí hối lộ < giá trị hợp đồng, ở một số nước gần như "luật bất thành văn") + phân biệt hối lộ lớn vs facilitation payments
+
+Slide 2: Luật quốc tế quan trọng: FCPA Mỹ 1977 (cấm hối lộ quan chức nước ngoài, áp dụng ngoài lãnh thổ, yêu cầu sổ sách minh bạch) + OECD Convention + UK Bribery Act 2010
+
+Slide 3: Case Siemens 2008 — hơn 1,4 tỷ USD hối lộ tại 10+ quốc gia, bị phạt 1,6 tỷ USD
+
+Giúp tôi:
+1. Giải thích điểm khác biệt quan trọng nhất giữa FCPA và UK Bribery Act
+2. Gợi ý câu chuyển tiếp tự nhiên giữa 3 slides
+3. Câu hỏi tư duy gợi mở nào hay nhất cho phần này`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Bribery (Tham nhũng & Hối lộ) trong kinh doanh quốc tế. Nội dung:
+
+Phần 1 (~1.5 phút): Hối lộ là gì + tại sao doanh nghiệp vẫn làm (chi phí hối lộ < giá trị hợp đồng, ở nhiều nước gần như "luật bất thành văn") + facilitation payments là gì và tại sao vẫn bất hợp pháp
+
+Phần 2 (~1.5 phút): FCPA Mỹ 1977 — tác động ra ngoài biên giới, phải lưu sổ sách minh bạch + OECD Convention + UK Bribery Act 2010 nghiêm hơn FCPA (cấm cả facilitation payments)
+
+Phần 3 (~2 phút): Case Siemens 2008 — hơn 1,4 tỷ USD hối lộ tại hơn 10 quốc gia để giành hợp đồng viễn thông, điện lực → bị phạt kỷ lục 1,6 tỷ USD → toàn bộ ban lãnh đạo bị thay → bài học: hối lộ bóp méo cạnh tranh và cuối cùng phá huỷ chính công ty làm nó
+
+Yêu cầu: nói tự nhiên, có câu hỏi tương tác với lớp, kết thúc đáng nhớ, không mở bằng "Xin chào"`
+    }
+  },
+  {
+    id: 'm4', name: 'Nhật Nam', topic: 'Harmful Products — Sản phẩm gây hại', dot: '#e0a8d8',
+    prompts: {
+      case: `Tìm 3 case study thực tế về công ty bán sản phẩm gây hại cho người tiêu dùng trên thị trường quốc tế (sau năm 2000, khác vụ sữa melamine Trung Quốc 2008). Ưu tiên case có tính quốc tế: sản phẩm bị cấm ở nước này nhưng vẫn bán ở nước khác, hoặc tiêu chuẩn an toàn áp dụng 2 tầng. Mỗi case:
+• Tên công ty, sản phẩm, quốc gia bị ảnh hưởng, năm
+• Tác hại cụ thể với người tiêu dùng (số liệu nếu có)
+• Phản ứng cơ quan quản lý: thu hồi, phạt, kiện tụng
+• 1 câu bài học về trách nhiệm sản phẩm`,
+      outline: `Tôi sắp thuyết trình 5 phút về Harmful Products trong kinh doanh quốc tế. Outline 3 slides:
+
+Slide 1: Sản phẩm gây hại là gì (thiết kế lỗi, sản xuất kém, thông tin sai lệch, cố ý che giấu tác hại) + vấn đề đặc biệt trên thị trường quốc tế: sản phẩm bị cấm ở nước A vẫn bán ở nước B, tiêu chuẩn an toàn thấp hơn ở nước đang phát triển
+
+Slide 2: Pháp luật: FDA áp dụng ngoài lãnh thổ — ví dụ điển hình Extraterritorial Application + Product safety laws Mỹ kiểm soát công ty sản xuất ở nước ngoài + Magnuson-Moss Warranty Act
+
+Slide 3: Case sữa melamine Sanlu 2008 — 300.000 trẻ bệnh, 6 trẻ tử vong, đã xuất khẩu nhiều nước
+
+Giúp tôi:
+1. Giải thích dễ hiểu Magnuson-Moss Warranty Act bảo vệ người tiêu dùng như thế nào
+2. Liên kết 3 slides tự nhiên
+3. Góc độ đạo đức nào mạnh nhất để nhấn mạnh`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Harmful Products trong kinh doanh quốc tế. Nội dung:
+
+Phần 1 (~1.5 phút): Sản phẩm gây hại là gì + vấn đề quốc tế đặc biệt: sản phẩm bị cấm ở Mỹ nhưng vẫn marketing mạnh ở châu Á, châu Phi (VD thuốc lá) + tiêu chuẩn an toàn thấp hơn ở nước đang phát triển
+
+Phần 2 (~1.5 phút): FDA áp dụng ngoài lãnh thổ — nhà máy nước ngoài bán vào Mỹ phải đạt chuẩn FDA (Extraterritorial Application) + Magnuson-Moss Warranty Act bảo vệ người tiêu dùng về bảo hành
+
+Phần 3 (~2 phút): Case sữa melamine 2008 — Sanlu pha melamine vào sữa bột trẻ em để qua bài kiểm tra, 300.000 trẻ bị bệnh, 6 trẻ tử vong, đã xuất khẩu nhiều nước châu Á → Sanlu phá sản, 2 lãnh đạo tử hình → bài học: đặt lợi nhuận trên sự an toàn trẻ em là vi phạm đạo đức ở mức nghiêm trọng nhất
+
+Yêu cầu: nói tự nhiên, có câu hỏi tương tác với lớp, kết thúc đáng nhớ, không mở bằng "Xin chào"`
+    }
+  },
+  {
+    id: 'm5', name: 'Anh Kiệt', topic: 'Pollution & Environment', dot: '#78b8e8',
+    prompts: {
+      case: `Tìm 3 case study thực tế về công ty đa quốc gia gây ô nhiễm môi trường nghiêm trọng tại nước đang phát triển (sau năm 2000, khác vụ Shell Nigeria). Ưu tiên case liên quan "pollution haven" — công ty chuyển hoạt động ô nhiễm sang nơi luật môi trường lỏng hơn. Mỗi case:
+• Tên công ty, quốc gia bị ảnh hưởng, năm
+• Loại ô nhiễm cụ thể và quy mô tác hại (số liệu nếu có)
+• Hậu quả pháp lý và tài chính cho công ty
+• 1 câu về trách nhiệm môi trường của MNC`,
+      outline: `Tôi sắp thuyết trình 5 phút về Pollution & Environment trong kinh doanh quốc tế. Outline 3 slides:
+
+Slide 1: Ô nhiễm là vấn đề đạo đức KD vì sao + khái niệm "pollution haven" (công ty chuyển sản xuất sang nơi luật lỏng hơn để cắt chi phí xử lý chất thải) + xung đột phát triển kinh tế vs bảo vệ môi trường + ví dụ Formosa Hà Tĩnh 2016
+
+Slide 2: Pháp luật quốc tế: GATT cho phép bảo vệ môi trường nhưng không được dùng làm rào cản thương mại giả tạo + NAFTA bảo vệ quyền Mỹ và thành lập CEC + Hiệp định Paris 2015 và xu hướng ESG
+
+Slide 3: Case Shell khai thác dầu Niger Delta Nigeria từ thập niên 1950
+
+Giúp tôi:
+1. Giải thích "pollution haven" dễ hiểu bằng ví dụ Việt Nam hoặc Đông Nam Á
+2. Cách liên kết Formosa Hà Tĩnh vào khung pháp lý quốc tế
+3. Cách kết thúc phần này ấn tượng nhất`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Pollution & Environment trong kinh doanh quốc tế. Nội dung:
+
+Phần 1 (~1.5 phút): Khái niệm "pollution haven" — công ty chuyển sản xuất sang nơi luật môi trường lỏng hơn để cắt chi phí + xung đột: nước đang phát triển chấp nhận tiêu chuẩn thấp để thu hút FDI + ví dụ Formosa Hà Tĩnh 2016 — cá chết hàng loạt, ngư dân mất sinh kế
+
+Phần 2 (~1.5 phút): GATT cho phép bảo vệ môi trường nhưng không được làm rào cản thương mại giả tạo + NAFTA và CEC + Hiệp định Paris 2015 và xu hướng ESG buộc doanh nghiệp báo cáo tác động môi trường
+
+Phần 3 (~2 phút): Case Shell Nigeria — khai thác dầu từ 1950, hàng trăm vụ tràn dầu, 500.000 người Ogoni mất đất và sông ngòi, Ken Saro-Wiwa bị treo cổ 1995 → tẩy chay Shell toàn cầu → 2021 tòa Hà Lan buộc Shell bồi thường → bài học: đạo đức KD không có biên giới
+
+Yêu cầu: nói tự nhiên, có câu hỏi tương tác với lớp, kết thúc đáng nhớ, không mở bằng "Xin chào"`
+    }
+  },
+  {
+    id: 'm6', name: 'Leader (Thành viên 6)', topic: 'Telecom & IP + Kết luận', dot: '#b8aef0',
+    prompts: {
+      case: `Tìm 3 case study thực tế về tranh chấp sở hữu trí tuệ (IP) hoặc kiểm soát viễn thông trong kinh doanh quốc tế sau năm 2010 (khác Apple vs Samsung và Huawei). Mỗi case:
+• Tên các bên liên quan, quốc gia, năm
+• Loại IP bị tranh chấp (patent, copyright, trademark, bí mật TM) hoặc vấn đề viễn thông cụ thể
+• Kết quả: tòa xử thế nào, bồi thường bao nhiêu, ảnh hưởng đến ngành
+• 1 câu bài học về bảo vệ IP hoặc quản trị viễn thông quốc tế`,
+      outline: `Tôi sắp thuyết trình 5 phút về Telecom & IP trong kinh doanh quốc tế + đọc câu kết luận chung cho cả nhóm. Outline 3 slides:
+
+Slide 1: Hai vấn đề nền kinh tế số: IP (patent, copyright, trademark, bí mật TM — ai sở hữu ý tưởng) và Viễn thông (ai kiểm soát hạ tầng internet = ai có quyền lực)
+
+Slide 2: Khung pháp lý: TRIPS — 1 trong 3 trụ cột WTO (GATT + GATS + TRIPS), đặt tiêu chuẩn tối thiểu bảo hộ IP + NAFTA bảo vệ IP và viễn thông + Bilateral agreements
+
+Slide 3: Case Apple vs Samsung (9 quốc gia, luật IP mỗi nơi diễn giải khác, Samsung bồi thường 1 tỷ+ USD) + Case Huawei (an ninh quốc gia) + Kết luận chung cả nhóm
+
+Giúp tôi:
+1. Giải thích tại sao TRIPS quan trọng hơn các hiệp định IP song phương
+2. Cách kết nối case Huawei với chủ đề đạo đức kinh doanh rộng hơn
+3. Viết cho tôi câu kết luận chung đủ mạnh để kết thúc bài thuyết trình 30 phút của cả nhóm`,
+      script: `Viết script thuyết trình 5 phút tiếng Việt về Telecom & IP + câu kết luận chung cho cả nhóm. Nội dung:
+
+Phần 1 (~1.5 phút): Hai vấn đề nền kinh tế số — IP (ai sở hữu ý tưởng: patent, copyright, trademark) và Viễn thông (ai kiểm soát hạ tầng = ai có quyền lực) + cả hai liên quan đến "tài sản vô hình"
+
+Phần 2 (~1.5 phút): TRIPS — tiêu chuẩn tối thiểu bảo hộ IP toàn cầu, 1 trong 3 trụ cột WTO + NAFTA + Bilateral agreements: Mỹ yêu cầu IP chặt chẽ khi ký với nước đang phát triển
+
+Phần 3 (~2 phút): Case Apple vs Samsung (9 nước, Samsung bồi thường 1 tỷ+ USD, luật IP mỗi nước diễn giải khác nhau) + Case Huawei (viễn thông không chỉ là kinh doanh mà còn là an ninh quốc gia) + KẾT LUẬN CHUNG CHO TOÀN NHÓM đủ mạnh và đáng nhớ
+
+Yêu cầu: nói tự nhiên, câu kết thúc phải đủ mạnh cho cả bài nhóm 30 phút, không mở bằng "Xin chào", phần kết luận nên là câu nói đáng nhớ nhất của cả bài`
+    }
+  }
+];
+
+function copyPrompt(btn) {
+  const text = btn.closest('.prompt-block').querySelector('.prompt-text').textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Đã sao chép';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Sao chép'; btn.classList.remove('copied'); }, 2200);
+  }).catch(() => {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✓ Đã sao chép'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Sao chép'; btn.classList.remove('copied'); }, 2200);
+  });
+}
+
+function filterAI(type, btn) {
+  document.querySelectorAll('.pt-filter').forEach(f => f.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prompt-block').forEach(b => {
+    b.classList.toggle('pt-hidden', type !== 'all' && b.dataset.type !== type);
+  });
+}
+
+function toggleAICard(hd) {
+  hd.closest('.ai-card').classList.toggle('open');
+}
+
+function buildAICards() {
+  const typeInfo = {
+    case:    { label: 'Tìm case study',   badges: ['grok','perp'],           badgeLabels: ['Grok','Perplexity'] },
+    outline: { label: 'Hiểu sâu outline', badges: ['claude','chatgpt'],      badgeLabels: ['Claude','ChatGPT']  },
+    script:  { label: 'Viết script',      badges: ['claude','chatgpt'],      badgeLabels: ['Claude','ChatGPT']  }
+  };
+  const root = document.getElementById('ai-cards');
+  AI_MEMBERS.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'ai-card';
+    let promptsHTML = '';
+    for (const [type, info] of Object.entries(typeInfo)) {
+      const text = m.prompts[type].replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const bdgs = info.badges.map((b,i) => `<span class="ai-bdg ${b}">${info.badgeLabels[i]}</span>`).join('');
+      promptsHTML += `
+        <div class="prompt-block" data-type="${type}">
+          <div class="prompt-hd">
+            <span class="prompt-type-lbl">${info.label}</span>
+            ${bdgs}
+            <button class="copy-btn" onclick="copyPrompt(this)">Sao chép</button>
+          </div>
+          <pre class="prompt-text">${text}</pre>
+        </div>`;
+    }
+    card.innerHTML = `
+      <div class="ai-card-hd" onclick="toggleAICard(this)">
+        <div class="ai-card-dot" style="background:${m.dot}"></div>
+        <div class="ai-card-info">
+          <div class="ai-card-name" style="color:${m.dot}">${m.name}</div>
+          <div class="ai-card-topic">${m.topic}</div>
+        </div>
+        <span class="ai-card-tog">▾</span>
+      </div>
+      <div class="ai-card-bd">${promptsHTML}</div>`;
+    root.appendChild(card);
+  });
+}
+
+buildAICards();
 </script>
 </div><!-- /page-wrap -->
 </body>
